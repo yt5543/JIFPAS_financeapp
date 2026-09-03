@@ -1,0 +1,9 @@
+name = "mieruka"
+type = "javascript"
+account_id = ""
+workers_dev = true
+main = "src/index.ts"
+site = { bucket = "dist" }
+
+[env.production]
+name = "mieruka-production"
