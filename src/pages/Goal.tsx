@@ -3,6 +3,7 @@ import { useAnalysis } from '../hooks/useAnalysis'
 import { requiredReturn } from '../lib/calc'
 import { pct, yen } from '../lib/format'
 import { useStore } from '../store'
+import { Link } from 'react-router-dom'
 import { LEVEL_META, LevelBadge, Notice, Section } from '../components/ui'
 import { classifyReturn } from '../lib/calc'
 
@@ -28,6 +29,14 @@ export default function GoalPage() {
     <div>
       <h1 className="text-base font-semibold">将来の目標</h1>
       <p className="text-xs text-slate-500">「何歳のときに、いくら持っていたいか」を決めるところから始めます。あとから何度でも変えられます。</p>
+      {g.currentAge >= 60 && (
+        <div className="mt-3">
+          <Notice tone="warn">
+            60歳以上の方は「増やす」より「何歳まで持つか」で見るほうが合います。
+            <Link to="/start" className="ml-1 underline">準備モード（資産寿命）で見る</Link>
+          </Notice>
+        </div>
+      )}
 
       <div className="card mt-4 grid gap-4 md:grid-cols-4">
         <div>

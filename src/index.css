@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-size: 16px;
+  }
+  body {
+    font-family: 'BIZ UDPGothic', 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif;
+    font-feature-settings: 'palt';
+  }
+}
+
 @layer components {
   .card {
     @apply rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200;

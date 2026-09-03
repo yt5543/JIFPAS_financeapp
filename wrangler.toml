@@ -1,9 +1,13 @@
-name = "mieruka"
-type = "javascript"
-account_id = ""
-workers_dev = true
-main = "src/index.ts"
-site = { bucket = "dist" }
+# Cloudflare Pages 用（GitHub 連携でビルド: npm run build / 出力 dist）
+name = "jifpas-financeapp"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"
 
-[env.production]
-name = "mieruka-production"
+# D1（匿名イベント）。作成後に database_id を入れてコメントを外す:
+#   npx wrangler d1 create mieruka-events
+#   npx wrangler d1 migrations apply mieruka-events --remote
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "mieruka-events"
+# database_id = ""
+# migrations_dir = "migrations"

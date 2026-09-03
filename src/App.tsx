@@ -1,17 +1,19 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import { DemoBanner } from './components/DemoBanner'
+import { DEMO } from './store'
 
 const NAV = [
   { to: '/', label: 'ホーム', icon: '◎' },
   { to: '/assets', label: '資産', icon: '▦' },
   { to: '/goal', label: '目標', icon: '◇' },
   { to: '/review', label: '見直し', icon: '↻' },
-  { to: '/products', label: '参考', icon: 'β' },
   { to: '/settings', label: '設定', icon: '⚙' },
 ]
 
 export default function App() {
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      {DEMO && <DemoBanner />}
       <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <div>
@@ -43,7 +45,7 @@ export default function App() {
         </p>
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-10 grid grid-cols-6 border-t border-slate-200 bg-white md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-10 grid grid-cols-5 border-t border-slate-200 bg-white md:hidden">
         {NAV.map((n) => (
           <NavLink
             key={n.to}

@@ -112,3 +112,66 @@ export function growthSeries(
   }
   return rows
 }
+
+/* ---------- v2: 資産寿命（取り崩し） ---------- */
+
+export interface LifespanInput {
+  /** 現在の年齢 */
+  age: number
+  /** 取り崩せる資産（円） */
+  assets: number
+  /** 年収入（年金など。円） */
+  incomeYearly: number
+  /** 年支出（円） */
+  expenseYearly: number
+  /** 運用利回り（小数）。既定 0 */
+  rate?: number
+  /** 施設に入る年齢。undefined なら施設なし */
+  facilityFromAge?: number
+  /** 施設に入ってからの年間追加支出（円） */
+  facilityExtraYearly?: number
+  /** 家を活用したときに加算される額（円）。undefined/0 なら活用しない */
+  homeValue?: number
+  /** 家を活用する年齢。既定は facilityFromAge、なければ現在 */
+  homeAtAge?: number
+  /** この年齢を超えても尽きなければ never。既定 105 */
+  maxAge?: number
+}
+
+export type LifespanPoint = { age: number; assets: number }
+
+export type LifespanResult =
+  | { status: 'ok'; age: number; series: LifespanPoint[] }
+  | { status: 'never'; series: LifespanPoint[] }
+  | { status: 'deficit'; monthlyGap: number }
+
+/**
+ * 資産寿命。年単位で A ← A·(1+r) − (E−I) − (施設中なら F) を繰り返し、
+ * A が 0 を下回った最初の年齢を返す。
+ */
+export function assetLifespan(i: LifespanInput): LifespanResult {
+  const rate = i.rate ?? 0
+  const maxAge = i.maxAge ?? 105
+  const deficit = i.expenseYearly - i.incomeYearly
+  const facilityFrom = i.facilityFromAge
+  const facilityExtra = i.facilityExtraYearly ?? 0
+  const home = i.homeValue ?? 0
+  const homeAt = i.homeAtAge ?? facilityFrom ?? i.age
+
+  if (i.assets <= 0 && deficit > 0 && home <= 0) {
+    return { status: 'deficit', monthlyGap: deficit / 12 }
+  }
+
+  let a = i.assets
+  let age = i.age
+  const series: LifespanPoint[] = [{ age, assets: a }]
+  while (age < maxAge) {
+    if (home > 0 && age === homeAt) a += home
+    const extra = facilityFrom !== undefined && age >= facilityFrom ? facilityExtra : 0
+    a = a * (1 + rate) - deficit - extra
+    age += 1
+    series.push({ age, assets: Math.max(0, a) })
+    if (a < 0) return { status: 'ok', age, series }
+  }
+  return { status: 'never', series }
+}
