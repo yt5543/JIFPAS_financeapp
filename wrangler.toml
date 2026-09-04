@@ -3,11 +3,9 @@ name = "jifpas-financeapp"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-01-01"
 
-# D1（匿名イベント）。作成後に database_id を入れてコメントを外す:
-#   npx wrangler d1 create mieruka-events
-#   npx wrangler d1 migrations apply mieruka-events --remote
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "mieruka-events"
-# database_id = ""
-# migrations_dir = "migrations"
+# D1（匿名イベント）。binding 名は functions/api/event.ts の env.DB に対応
+[[d1_databases]]
+binding = "DB"
+database_name = "mieruka-events"
+database_id = "535e829b-5a2b-42fc-bbcb-debb2314c265"
+migrations_dir = "migrations"
