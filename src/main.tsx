@@ -12,6 +12,7 @@ import Prep from './pages/Prep'
 import PrepResult from './pages/PrepResult'
 import Consult from './pages/Consult'
 import Share from './pages/Share'
+import Privacy from './pages/Privacy'
 import { setRefFromUrl } from './lib/ref'
 import './index.css'
 
@@ -33,6 +34,7 @@ const router = createHashRouter([
       { path: 'goal', element: <GoalPage /> },
       { path: 'review', element: <Review /> },
       { path: 'settings', element: <Settings /> },
+      { path: 'privacy', element: <Privacy /> },
     ],
   },
 ])

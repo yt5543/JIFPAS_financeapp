@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, Link } from 'react-router-dom'
 import { DemoBanner } from './components/DemoBanner'
 import { DEMO } from './store'
 
@@ -39,10 +39,17 @@ export default function App() {
 
       <main className="mx-auto max-w-5xl px-4 py-5">
         <Outlet />
-        <p className="mt-10 text-center text-[11px] leading-relaxed text-slate-400">
-          本アプリの数値はすべてご入力内容に基づく試算であり、将来の成果を保証するものではありません。
-          特定の金融商品の推奨・勧誘は行いません。
-        </p>
+        <div className="mt-10 space-y-2 text-center">
+          <p className="text-[11px] leading-relaxed text-slate-400">
+            本アプリの数値はすべてご入力内容に基づく試算であり、将来の成果を保証するものではありません。
+            特定の金融商品の推奨・勧誘は行いません。
+          </p>
+          <p className="text-[11px] text-slate-500">
+            <Link to="/privacy" className="underline hover:text-slate-600">
+              プライバシーポリシー
+            </Link>
+          </p>
+        </div>
       </main>
 
       <nav className="fixed inset-x-0 bottom-0 z-10 grid grid-cols-5 border-t border-slate-200 bg-white md:hidden">
